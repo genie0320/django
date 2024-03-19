@@ -1,11 +1,16 @@
-{% extends 'layout.html' %}
-
-{% block title %}
-    Beyond Bite - 사랑받는 서비스를 만듭니다
-{% endblock %}
-
-{% block content %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="KO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyond Bite - 사랑받는 서비스를 만듭니다</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/main.js' %}"></script>    
+</head>
+<body>
     <h1>About</h1>
     <p>안녕하세요 Beyond Bite는 이런 일을 합니다.</p>
     <a href="/"><p>home</p></a>
-{% endblock %}
+</body>
+</html>
