@@ -1,0 +1,16 @@
+{% extends 'layout.html' %} {% block content %}
+<h1>Index</h1>
+
+<section>
+	<ul>
+		{% for room in rooms %}
+		<li>
+			<a href="room/{{ room.id }}">
+				<h5>{% url 'room' room.id %} -- {{ room.name }}</h5>
+			</a>
+		</li>
+		{% endfor %}
+	</ul>
+</section>
+
+{% endblock content %}
