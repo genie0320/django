@@ -5,7 +5,9 @@
 	<ul>
 		{% for room in rooms %}
 		<li>
+			<p>@{{ room.host.username }}</p>
 			<a href="room/{{ room.id }}">
+				<p>{{ room.topic.name }}</p>
 				<h5>{% url 'room' room.id %} -- {{ room.name }}</h5>
 			</a>
 		</li>

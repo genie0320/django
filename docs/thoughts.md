@@ -20,3 +20,7 @@ path("room/<str:pk>/", views.room, name="room"),
 <h5>{% url 'room' room.id %} -- {{ room.name }}</h5>
 > 이름이 'room'인 데이터에서 id를 뽑아와라..는 뜻이고, 그 다음엔 그 뽑아온 걸 그대로 전달하는 모양.
 앞에서 html명이 변경되더라도, 모든 페이지에서 경로를 변경하지 않아도 되는 것.
+
+## Django 에서의 model handling
+
+![alt text](image.png)
