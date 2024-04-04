@@ -1,9 +1,55 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <h1>Rooms</h1>
-    <h1>{{ room.name }}</h1>
-    <p>{{ room.description }}</p>
-    <p>여기는 메시지들</p>
-    <p>여기는 작성자</p>
+
+<style>
+    .container {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+    }
+</style>
+<div class="container">
+    <section class="room_contents">
+        <h1>{{ room.name }}</h1>
+        <p>@{{ room.host.username }}
+        </p>
+        <p>{{ room.description }}</p>
+        <div class='comment_wrapper'>
+            <h3>Comments</h3>
+            <ul>
+                {% for comment in comments %}
+                <li>
+                    {% if request.user == comment.user %}
+                    <a href="{% url 'delete-comment' comment.id %}">Delete</a>
+                    {% comment %} <a href="{% if request.user == comment.user %}">Edit</a> # TODO: Edit 만들기 {% endcomment %}
+                    {% endif %}
+                    <span>@{{ comment.user }}/{{ comment.created|timesince }}ago</span>
+                    <span>------------------</span>
+                    <p>{{ comment.body }}
+                        <p>
+                </li>
+                {% endfor %}
+            </ul>
+            {% if request.user.is_authenticated %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="text" name='body' placeholder="comment here" />
+            </form>
+            {% endif %}
+        </div>
+    </section>
+    <section class="room_members">
+        <h3>Members</h3>
+        <hr>
+        <ul>
+            {% for member in members %}
+            <li>
+                <span>홍길동</span><span>---</span>
+                @{{ member.username }}
+            </li>
+
+            {% endfor %}
+        </ul>
+    </section>
+</div>
 {% endblock content %}

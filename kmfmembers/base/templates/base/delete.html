@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>confirm</h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <p>진짜 삭제할거?</p>
+    <p>
+        <strong>{{ obj }}</strong>
+    </p>
+    <a href="{{ request.META.HTTP_REFERER }}">돌아가기</a>
+    <input type="submit" value="confirm">
+</form>
+
+{% endblock content %}

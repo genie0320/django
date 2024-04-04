@@ -1,7 +1,42 @@
-<a href="/">
-    <h1>HOME</h1>
-</a>
-<a href="/room">
-    <h1>ROOM</h1>
-</a>
+<style>
+  .logo {
+    display: inline-block;
+    width: 200px;
+  }
 
+  .nav {
+    display: inline-block;
+  }
+</style>
+
+<a href="/">
+  <h1 class="logo">LOGO</h1>
+</a>
+{% if request.user.is_authenticated %}
+  <p>어서와 진짜 힘들었다.
+    {{ request.user }}</p>
+{% endif %}
+<ul class="nav">
+  <li>
+    <a href="/admin">
+      <span>ADMIN</span>
+    </a>
+  </li>
+  {% if request.user.is_authenticated %}
+    <li>
+      <a href="{% url 'logout' %}">
+        <span>Logout</span>
+      </a>
+    </li>
+  {% else %}
+    <li>
+      <a href="{% url 'user-login' %}">
+        <span>Login</span>
+      </a>
+    </li>
+  {% endif %}
+</ul>
+
+<form action="{% url 'index' %}" method="GET">
+  <input type="text" name="q" placeholder="키워드 입력해봐"/>
+</form>

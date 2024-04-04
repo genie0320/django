@@ -1,18 +1,70 @@
-{% extends 'layout.html' %} {% block content %}
+{% extends 'layout.html' %} 
+{% block content %}
+
+<style>
+	.container {
+		display: grid;
+		grid-template-columns : 1fr 3fr 1fr;
+	}
+
+</style>
 <h1>Index</h1>
 
-<section>
-	<ul>
-		{% for room in rooms %}
-		<li>
-			<p>@{{ room.host.username }}</p>
-			<a href="room/{{ room.id }}">
-				<p>{{ room.topic.name }}</p>
-				<h5>{% url 'room' room.id %} -- {{ room.name }}</h5>
+<div class="container home">
+	<section>
+		<h3>Browse Topic</h3>
+		<hr>
+		<ul>
+			<li><a href="{% url 'index' %}"><span>All</span></a></li>
+			{% for topic in topics %}
+			<li><a href="{% url 'index' %}?q={{ topic.name }}"><span>{{ topic.name }}</span></a></li>
+			{% endfor %}
+		</ul>
+	</section>
+	<section>
+		<h5>{{ room_count }} 개의 커뮤니티가 있습니다.</h5>
+		<a href="{% url 'create-room' %}">
+			<button action='' value=''>new room</button>
+		</a>
+		<ul>
+			{% for room in rooms %}
+			<li>
+				<a href="room/{{ room.id }}">
+					<span>@{{ room.host.username }}</span>
+					<h3><span>[{{ room.topic.name }}]</span> {{ room.id }} -- {{ room.name }}</h3>
+					{% comment %} <span>{{ room.createdate }}</span> {% endcomment %}
+				</a>
+				{% if request.user == room.host %}
+					<span><a href="{% url 'delete-room' room.id %}">Delete</a></span>
+					<span><a href="{% url 'update-room' room.id %}">Edit</a></span>
+				{% endif %}
+				<hr>
+			</li>
+			{% endfor %}
+		</ul>
+	</section>
+	<section class = 'activity'>
+		<h3>Recent Activity</h3>
+		<ul>
+			<a href="">
+				<li>
+					{% for comment in comments %}
+						{% if request.user == comment.user %}
+							<a href="{% url 'delete-comment' comment.id %}">Delete</a>
+							{% comment %} <a href="{% if request.user == comment.user %}">Edit</a> # TODO: Edit 만들기 {% endcomment %}
+						{% endif %}
+						<span>@{{ comment.user }}</span>
+						<span>{{ comment.created|timesince }} ago</span>
+						<span>{{ comment.room }}</span> 
+						{% comment %} TODO: 여기랑 밑에 메시지 본문에 일정한 글자만 보일 수 있도록 css로 처리할 것. {% endcomment %}
+						{% comment %} <p>작성자 이름</p> {% endcomment %}
+						<p>{{ comment.body}}</p>
+					{% endfor %}
+				</li>
 			</a>
-		</li>
-		{% endfor %}
-	</ul>
-</section>
+		</ul>
+		<hr>
+	</section>
+</div>
 
 {% endblock content %}

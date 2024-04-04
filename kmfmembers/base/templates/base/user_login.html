@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+  {% if page == 'user-login' %}
+    <section>
+      <form action="" method="POST">
+        {% csrf_token %}
+
+        <label>Password :</label>
+        <input type="text" name="username" placeholder="아이디를 넣어라"/>
+
+        <label>Password :</label>
+        <input type="password" name="password" placeholder="비밀번호다"/>
+
+        <input type="submit" value="Login"/>
+      </form>
+
+      <p>아직 가입을 안했다고?</p>
+      <a href="{% url 'user-join' %}">가입하기</a>
+
+    </section>
+  {% else %}
+    <section>
+      <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" value="Join"/>
+
+        <p>이미 가입했다고?</p>
+        <a href="{% url 'user-login' %}">로그인하기</a>
+      </form>
+    </section>
+  {% endif %}
+{% endblock content %}
